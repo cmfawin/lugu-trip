@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E2A3B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>泸沽湖 · 11.25–11.29</title>
+<style>
+:root{
+  --lake:#0E2A3B;      /* 深湖 */
+  --plateau:#2F6F8F;   /* 高原蓝 */
+  --mist:#EEF2F3;      /* 晨雾 */
+  --reed:#D9A441;      /* 芦苇金 */
+  --glow:#E8784A;      /* 晚霞橘 */
+  --dusk:#3B2E5A;      /* 暮紫 */
+  --ink-2:#4A6272;
+  --line:#D3DDE2;
+  --card:#FFFFFF;
+  --display:"Songti SC","STSongti-SC-Bold","Noto Serif CJK SC","Source Han Serif SC","SimSun",serif;
+  --body:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --num:"Avenir Next Condensed","DIN Alternate","Roboto Condensed","Arial Narrow",sans-serif;
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--mist);color:var(--lake);line-height:1.6;font-size:15px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--glow);outline-offset:2px;border-radius:4px}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+
+/* ---------- Hero：天空 + 湖面倒影 ---------- */
+.hero{position:relative;height:100svh;min-height:600px;overflow:hidden;color:#fff;
+  background:linear-gradient(180deg,#1C2147 0%,#3B2E5A 22%,#8C4A6E 42%,#E8784A 56%,#F2C46B 62%,#F2C46B 62.01%);}
+.hero .lake{position:absolute;left:0;right:0;top:62%;bottom:0;
+  background:linear-gradient(180deg,#B9805A 0%,#5A4A6A 18%,#1E3550 55%,#0E2A3B 100%);}
+.hero .lake::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.06) 0 1px,transparent 1px 7px);}
+.hero svg.ridge{position:absolute;left:0;width:100%;top:calc(62% - 64px);height:65px;display:block}
+.title-wrap{position:absolute;left:12vw;top:62%;transform:translateY(-100%)}
+.title{font-family:var(--display);font-weight:900;writing-mode:vertical-rl;font-size:min(22vw,120px);line-height:1;letter-spacing:.06em;
+  text-shadow:0 2px 30px rgba(59,46,90,.35);animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both}
+.reflect{position:absolute;left:12vw;top:62%;font-family:var(--display);font-weight:900;writing-mode:vertical-rl;font-size:min(22vw,120px);line-height:1;letter-spacing:.06em;
+  transform:scaleY(-1);transform-origin:center;color:rgba(255,224,190,.5);filter:blur(1.2px);
+  -webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.85),transparent 80%);mask-image:linear-gradient(0deg,rgba(0,0,0,.85),transparent 80%);
+  animation:ripple 6s ease-in-out infinite;pointer-events:none}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes ripple{0%,100%{transform:scaleY(-1) skewX(0)}50%{transform:scaleY(-1.03) skewX(-1.2deg)}}
+.hero-meta{position:absolute;right:7vw;top:calc(env(safe-area-inset-top,0px) + 54px);text-align:right;max-width:52vw}
+.hero-meta .date{font-family:var(--num);font-size:34px;line-height:1;letter-spacing:.02em}
+.hero-meta .date small{display:block;font-size:13px;opacity:.75;letter-spacing:.2em;margin-top:6px;font-family:var(--body)}
+.hero-meta p{font-size:13px;opacity:.85;margin-top:14px;line-height:1.7}
+.now{position:absolute;right:7vw;left:auto;bottom:calc(28px + var(--safe-b));max-width:60vw;text-align:right}
+.now .k{font-size:12px;letter-spacing:.2em;opacity:.7}
+.now .v{font-family:var(--num);font-size:30px;line-height:1.1;margin-top:4px}
+.now .s{font-size:12px;opacity:.75;margin-top:2px}
+.scroll-hint{position:absolute;left:12vw;bottom:calc(30px + var(--safe-b));font-size:12px;opacity:.7;letter-spacing:.2em}
+
+/* ---------- 导航 ---------- */
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(238,242,243,.88);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav.tabs .row{display:flex;gap:4px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+nav.tabs .row::-webkit-scrollbar{display:none}
+nav.tabs a{flex:none;text-decoration:none;font-size:14px;padding:6px 12px;border-radius:999px;color:var(--ink-2)}
+nav.tabs a.on{background:var(--lake);color:#fff}
+
+section{padding:40px 18px 8px;max-width:640px;margin:0 auto;scroll-margin-top:30px}
+.eyebrow{font-size:12px;letter-spacing:.24em;color:var(--plateau)}
+h2{font-family:var(--display);font-weight:900;font-size:30px;line-height:1.25;margin:4px 0 6px}
+.lead{color:var(--ink-2);font-size:14px}
+
+/* ---------- 天选择 ---------- */
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:20px 0 6px}
+.days button{padding:10px 0 8px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-align:center;line-height:1.2}
+.days button .w{font-size:12px;color:var(--ink-2)}
+.days button .d{font-family:var(--num);font-size:22px;display:block;margin-top:2px}
+.days button[aria-selected="true"]{background:var(--lake);border-color:var(--lake);color:#fff}
+.days button[aria-selected="true"] .w{color:rgba(255,255,255,.7)}
+.days button .today{display:block;font-size:10px;color:var(--glow);height:12px}
+.day-head{margin:22px 0 4px}
+.day-head h3{font-family:var(--display);font-size:22px;font-weight:900;line-height:1.35}
+.day-head .tag{display:inline-block;font-size:12px;color:var(--plateau);margin-top:4px}
+.stay{font-size:13px;color:var(--ink-2);margin-top:2px}
+
+/* ---------- 天色时间线（签名元素） ---------- */
+.tl{list-style:none;margin:18px 0 0;position:relative}
+.tl li{display:grid;grid-template-columns:54px 10px 1fr;column-gap:12px;position:relative;padding-bottom:18px}
+.tl .t{font-family:var(--num);font-size:18px;text-align:right;line-height:1.35;padding-top:1px}
+.tl .t.none{color:var(--ink-2);font-size:13px;font-family:var(--body)}
+.tl .sky{border-radius:6px;position:relative;margin-bottom:-18px}
+.tl li:last-child .sky{margin-bottom:0}
+.tl li.light .sky::after{content:"";position:absolute;left:50%;top:6px;width:16px;height:16px;margin-left:-8px;border-radius:50%;
+  background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35),0 0 14px 4px var(--c,#fff)}
+.tl .body{min-width:0}
+.tl .what{font-weight:600;font-size:15px;line-height:1.45}
+.tl .note{font-size:13px;color:var(--ink-2);margin-top:2px}
+.tl .lw{display:inline-block;font-family:var(--num);font-size:13px;padding:1px 8px;border-radius:999px;margin-top:6px;color:var(--lake);background:var(--c,#eee)}
+.tl li.opt .what::before{content:"可选";font-size:11px;font-weight:500;border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-right:6px;color:var(--ink-2);vertical-align:1px}
+.tl li.next .what::after{content:"下一项";font-size:11px;font-weight:600;background:var(--glow);color:#fff;border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:1px}
+.tl li.past{opacity:.45}
+
+/* ---------- 光线表 ---------- */
+.sun-key{display:flex;gap:16px;margin:18px 0 6px;font-size:13px;color:var(--ink-2)}
+.sun-key b{font-family:var(--num);font-size:20px;color:var(--lake);font-weight:500;display:block}
+.spots{display:grid;gap:12px;margin-top:16px}
+.spot{background:var(--card);border-radius:18px;padding:16px 16px 14px;border:1px solid var(--line)}
+.spot .top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.spot h4{font-size:16px;font-weight:700}
+.spot .when{font-family:var(--num);font-size:16px;color:var(--plateau);white-space:nowrap}
+.spot p{font-size:13px;color:var(--ink-2);margin-top:6px}
+.spot .day{font-size:12px;color:var(--plateau);margin-top:6px}
+.bar{position:relative;height:22px;border-radius:6px;margin-top:12px;overflow:hidden}
+.bar .w{position:absolute;top:0;bottom:0;border-radius:4px;border:2px solid var(--lake)}
+.bar .w.alt{border-style:dashed;border-color:rgba(14,42,59,.55)}
+.bar .tick{position:absolute;top:-2px;bottom:-2px;width:1px;background:rgba(255,255,255,.8)}
+.axis{display:flex;justify-content:space-between;font-family:var(--num);font-size:11px;color:var(--ink-2);margin-top:3px}
+.callout{margin-top:16px;padding:14px 16px;border-left:3px solid var(--glow);background:#fff;border-radius:0 14px 14px 0;font-size:14px}
+
+/* ---------- 卡片通用 ---------- */
+.card{background:var(--card);border-radius:20px;padding:18px;border:1px solid var(--line);margin-top:14px}
+.card h3{font-family:var(--display);font-weight:900;font-size:20px;line-height:1.35}
+.card .sub{font-size:13px;color:var(--plateau);margin-top:2px}
+.kv{display:grid;grid-template-columns:72px 1fr;gap:8px 10px;margin-top:14px;font-size:14px}
+.kv dt{color:var(--ink-2);font-size:13px;padding-top:1px}
+.kv dd{min-width:0}
+.copy{font-family:var(--num);font-size:15px;border-bottom:1px dashed var(--plateau);word-break:break-all;text-align:left}
+.warn{color:var(--glow);font-size:12px}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.pill{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--mist);color:var(--ink-2)}
+ul.plain{list-style:none;margin-top:12px}
+ul.plain li{font-size:14px;padding:8px 0;border-top:1px solid var(--line)}
+ul.plain li:first-child{border-top:0}
+ul.plain li b{font-weight:600}
+.deadline{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.deadline div{background:var(--mist);border-radius:12px;padding:10px 12px;font-size:12px;color:var(--ink-2)}
+.deadline b{display:block;font-family:var(--num);font-size:18px;color:var(--lake);font-weight:500}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--lake);color:#fff;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--lake);border:1px solid var(--line)}
+
+/* ---------- 晚餐 ---------- */
+.food{list-style:none;margin-top:10px}
+.food li{padding:14px 0;border-top:1px solid var(--line)}
+.food li:first-child{border-top:0}
+.food .n{font-weight:700;font-size:15px}
+.food .n span{font-weight:400;font-size:12px;color:var(--plateau);margin-left:6px}
+.food .d{font-size:13px;color:var(--ink-2);margin-top:3px}
+.food .pick{display:inline-block;font-size:11px;background:var(--reed);color:#fff;border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:2px}
+
+/* ---------- 清单 ---------- */
+.check{list-style:none;margin-top:12px}
+.check li{border-top:1px solid var(--line)}
+.check li:first-child{border-top:0}
+.check label{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:11px 0;font-size:14px;cursor:pointer;align-items:start}
+.check input{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--plateau);margin-top:1px;display:grid;place-items:center}
+.check input:checked{background:var(--plateau)}
+.check input:checked::after{content:"";width:6px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.check input:checked + span{color:var(--ink-2);text-decoration:line-through;text-decoration-color:rgba(74,98,114,.5)}
+.check small{display:block;color:var(--ink-2);font-size:12px}
+.group-t{font-size:12px;letter-spacing:.2em;color:var(--plateau);margin-top:22px}
+
+footer{padding:40px 18px calc(48px + var(--safe-b));text-align:center;font-size:12px;color:var(--ink-2);max-width:640px;margin:0 auto}
+footer .mark{font-family:var(--display);font-size:18px;color:var(--lake);letter-spacing:.4em;margin-bottom:8px}
+
+.toast{position:fixed;left:50%;bottom:calc(30px + var(--safe-b));transform:translate(-50%,20px);background:var(--lake);color:#fff;font-size:13px;padding:8px 16px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" aria-label="封面">
+  <div class="lake"></div>
+  <svg class="ridge" viewBox="0 0 400 65" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 65 L0 48 L40 40 L70 44 L110 30 L150 36 L190 14 L215 6 L240 16 L262 12 L300 30 L340 34 L370 44 L400 40 L400 65 Z" fill="#2A2347" opacity=".85"/>
+  </svg>
+  <div class="title-wrap"><h1 class="title">泸沽湖</h1></div>
+  <div class="reflect" aria-hidden="true">泸沽湖</div>
+
+  <div class="hero-meta">
+    <div class="date num">11.25<br>—11.29<small>五天四晚 · 丽江进出</small></div>
+    <p>云南妹子 party，<br>躺平之旅。</p>
+  </div>
+  <div class="now" id="now" aria-live="polite">
+    <div class="k" id="nowK">距出发</div>
+    <div class="v" id="nowV">—</div>
+    <div class="s" id="nowS"></div>
+  </div>
+  <div class="scroll-hint">↓ 往下看行程</div>
+</header>
+
+<nav class="tabs" aria-label="页面导航">
+  <div class="row" id="navRow">
+    <a href="#plan" class="on">每日行程</a>
+    <a href="#light">光线表</a>
+    <a href="#stay">住宿</a>
+    <a href="#food">晚饭</a>
+    <a href="#drive">自驾租车</a>
+    <a href="#pack">行李</a>
+  </div>
+</nav>
+
+<main>
+<section id="plan">
+  <div class="eyebrow">ITINERARY</div>
+  <h2>每日行程</h2>
+  <p class="lead">时间线左侧的颜色就是那个钟点泸沽湖的天色；发光圆点是拍照的光线窗口。</p>
+  <div class="days" role="tablist" id="days"></div>
+  <div id="dayView"></div>
+</section>
+
+<section id="light">
+  <div class="eyebrow">LIGHT</div>
+  <h2>机位光线表</h2>
+  <p class="lead">泸沽湖 11/26 平地理论值。周边有山，实际见光会晚、太阳没入山后会早 10–30 分钟。</p>
+  <div class="sun-key">
+    <div>日出<b>07:46</b></div>
+    <div>日落<b>18:22</b></div>
+    <div>天黑<b>18:47</b></div>
+  </div>
+  <div class="callout">高原湖下午容易起风，<b>倒影和平静湖面趁上午 10 点前</b>。里格半岛是上午机位，别排去看日落。</div>
+  <div class="spots" id="spots"></div>
+  <div class="card">
+    <h3>日落去哪看</h3>
+    <ul class="plain">
+      <li><b>女神湾</b>　日落天花板，看完回大落水要开 45 分钟夜路，排在周六</li>
+      <li><b>洛洼码头</b>　较近、人少，车程约 40 分钟</li>
+      <li><b>大落水码头</b>　酒店步行 3 分钟，零驾驶</li>
+      <li><b>蒗放湖滨</b>　备选</li>
+    </ul>
+  </div>
+</section>
+
+<section id="stay">
+  <div class="eyebrow">STAY</div>
+  <h2>住宿 · 全部已订</h2>
+
+  <div class="card">
+    <h3>云景栖谷 · 360° 观景美宿</h3>
+    <div class="sub">11/25（三）· 束河古镇 · 1 晚 · 已订 ¥290</div>
+    <dl class="kv">
+      <dt>天台</dt><dd>顶楼 360° 直面玉龙雪山，<b>07:30 上去看日照金山</b>（约 07:35–08:05）</dd>
+      <dt>早餐</dt><dd>8:00–9:30，米线 / 粥 / 油条 / 豆浆</dd>
+      <dt>停车</dt><dd>两个免费专属停车场</dd>
+      <dt>位置</dt><dd>束河东北角蔷薇大道，步行几分钟到古镇核心</dd>
+    </dl>
+    <div class="btn-row">
+      <a class="btn" href="tel:18988036539">打电话 189 8803 6539</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>艾洛迪私汤酒店</h3>
+    <div class="sub">11/26–11/29 · 大落水村 · 3 晚不搬家 · 离店后付</div>
+    <dl class="kv">
+      <dt>房型</dt><dd>杨柳春 · 露台双床房 · 亲水湖景（2×1.5m，含双早）</dd>
+      <dt>前 2 晚</dt><dd>11/26–11/28 · ¥1,016</dd>
+      <dt>最后 1 晚</dt><dd>11/28–11/29 · ¥508<br><span style="font-size:13px;color:var(--ink-2)">拆成两个订单，到店报姓名 + 证件入住</span></dd>
+      <dt>入住</dt><dd>14:00 后；周日 12:30 前退房</dd>
+      <dt>位置</dt><dd>湖滨路，离水 3–5 米，步行 3 分钟到大落水码头</dd>
+    </dl>
+    <div class="deadline">
+      <div>前 2 晚免费取消截止<b>11/25 10:00</b></div>
+      <div>最后 1 晚免费取消截止<b>11/27 10:00</b></div>
+    </div>
+    <div class="pill-row">
+      <span class="pill">地暖 + 墙暖</span><span class="pill">私汤泡池</span><span class="pill">村内接送 1 份</span><span class="pill">旅拍精修 3 张</span><span class="pill">漂浮早餐需预约</span>
+    </div>
+    <p style="font-size:13px;color:var(--ink-2);margin-top:12px">到店说一句「要地暖正常工作的房间」，顺便约好漂浮早餐、接送和旅拍。</p>
+  </div>
+</section>
+
+<section id="food">
+  <div class="eyebrow">DINNER</div>
+  <h2>晚饭推荐清单</h2>
+  <p class="lead">只是备选，不用照着吃，按当天心情挑。酒店含双早，这里只列晚饭。</p>
+
+  <div class="card">
+    <h3>束河 · 周三晚</h3>
+    <div class="sub">评分和人均来自携程、去哪儿，去之前在地图上看一眼营业时间</div>
+    <ul class="food">
+      <li><div class="n">文氏奶奶 · 云南民间菜</div><div class="d">本地人爱去：鸡豆凉粉、奶奶烧茄子、腊排骨</div></li>
+      <li><div class="n">雪景云味 · 野生菌腊排骨火锅</div><div class="d">菌汤鲜、分量足</div></li>
+      <li><div class="n">浮娴小锅饭 · 云南民俗风味餐厅<span>人均约 ¥80</span></div><div class="d">携程 4.9 分，束河口碑最稳的一家；小锅饭现焖约 20 分钟，普洱茶红烧肉、汽锅鸡、纳西烤鱼</div></li>
+      <li><div class="n">春天里餐厅 · 丽江特色美食<span>纳西烤鱼</span></div><div class="d">古镇里面，招牌纳西烤鱼，也有焦香腊排骨、鸡豆凉粉；二楼是小酒吧，适合吃完坐坐</div></li>
+      <li><div class="n">呆呆妈妈菜（北门店）<span>创意云南菜</span></div><div class="d">人气旺，推荐自酿梅子酒；在中和路 2 号</div></li>
+      <li><div class="n">街尾腊排骨火锅<span>腊排骨火锅</span></div><div class="d">腊排骨和腊猪蹄是招牌，想专门吃腊排骨来这家</div></li>
+      <li><div class="n">88 号小吃店<span>人均约 ¥44</span></div><div class="d">不想正经吃饭时的小吃选择，携程 1000+ 条点评</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>大落水 · 湖边三晚</h3>
+    <ul class="food">
+      <li><div class="n">啊夏祖母博物馆非遗餐厅<span class="pick">第一晚</span><span>摩梭炒菜</span></div><div class="d">就在艾洛迪旁边，菜单基本不踩雷</div></li>
+      <li><div class="n">君香小院蒸汽石锅鱼<span>石锅鱼</span></div><div class="d">裂腹鱼即叫即杀，鱼肉嫩、蘸水好；别嫌姜多</div></li>
+      <li><div class="n">摩梭人家菌香土鸡石锅鱼<span>20 年老店</span></div><div class="d">活鱼现杀、菌菇新鲜，只专心做鱼</div></li>
+      <li><div class="n">阿妈野生菌土鸡腊排骨 · 石锅鱼<span>老店</span></div><div class="d">好吃度：鱼 &gt; 土鸡 &gt; 腊排骨；和摩梭人家挨着</div></li>
+      <li><div class="n">摩梭炭火烧烤<span>夜宵</span></div><div class="d">烧鸡皮脆如纸，<b>提前 2 小时电话订</b>；蒜香肉粒烤茄子</div></li>
+      <li><div class="n">乡味砂锅<span>宵夜</span></div><div class="d">干巴菌炒饭 ¥48、松茸土鸡米线，回头客多</div></li>
+      <li><div class="n">品味泸沽湖<span>云南菜</span></div><div class="d">大落水停车场旁，野生菌多，价格略高</div></li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <b>避坑</b>：「吃饭时间」（综艺同款）不推荐；石锅鱼汤特别白的要谨慎；点鱼先问价再杀（约 ¥150–200/斤）；柴火鸡现做要等约 1 小时。
+  </div>
+</section>
+
+<section id="drive">
+  <div class="eyebrow">DRIVE</div>
+  <h2>自驾与租车</h2>
+
+  <div class="card">
+    <h3>大众高尔夫 1.5T 自动</h3>
+    <div class="sub">丽江三义机场服务点 · 同点取还 · 已订</div>
+    <dl class="kv">
+      <dt>取车</dt><dd><span class="num" style="font-size:17px">11/25 周三 17:00</span></dd>
+      <dt>还车</dt><dd><span class="num" style="font-size:17px">11/29 周日 17:30</span><br><span style="font-size:13px;color:var(--ink-2)">离 19:20 起飞还有 1 小时 50 分</span></dd>
+      <dt>费用</dt><dd>¥516（租车费 ¥316 + 保险升级包 ¥200）</dd>
+      <dt>取车时</dt><dd>环车拍照留证，确认油量</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3>三段路</h3>
+    <ul class="plain">
+      <li><b>周三 机场 → 束河</b><br><span class="num">~30 km · 40 分钟</span>，城市道路</li>
+      <li><b>周四 束河 → 大落水</b><br>走丽宁公路，百度地图实测 <span class="num">3h42m</span>，按 4.5 小时排；普通公路，有山区弯道段</li>
+      <li><b>周日 大落水 → 机场</b><br>同路反向，<span class="num">13:00</span> 出发，<span class="num">17:15</span> 前到机场</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>开车要留意</h3>
+    <ul class="plain">
+      <li>出发前一天和当天早上各看一次实时路况和交通管制</li>
+      <li>清晨山区路面可能结冰；10 点后出发、中午过山区段正好避开，遇雨雪宁可推迟</li>
+      <li>弯道多，提前吃晕车药</li>
+      <li>全程唯一一次夜路：周六女神湾日落后，约 45 分钟环湖路，慢开</li>
+    </ul>
+  </div>
+</section>
+
+<section id="pack">
+  <div class="eyebrow">CHECKLIST</div>
+  <h2>要带的东西</h2>
+  <p class="lead">勾选会保存在这台手机上。</p>
+
+
+  <ul class="check" data-group="bag">
+    <li><label><input type="checkbox" data-k="b1"><span>身份证、驾照原件（主驾）</span></label></li>
+    <li><label><input type="checkbox" data-k="b2"><span>厚外套 / 羽绒服<small>早晚 0–5℃，白天 15℃ 左右</small></span></label></li>
+    <li><label><input type="checkbox" data-k="b3"><span>防晒霜、墨镜、帽子</span></label></li>
+    <li><label><input type="checkbox" data-k="b4"><span>晕车药、肠胃药、创可贴、润唇膏</span></label></li>
+    <li><label><input type="checkbox" data-k="b8"><span>移动电源<small>低温掉电快，手机和充电宝贴身放</small></span></label></li>
+    <li><label><input type="checkbox" data-k="b9"><span>车载充电线<small>单程近 4 小时，路上导航耗电</small></span></label></li>
+    <li><label><input type="checkbox" data-k="b10"><span>睡衣</span></label></li>
+    <li><label><input type="checkbox" data-k="b6"><span>少量现金<small>给船夫和小摊</small></span></label></li>
+  </ul>
+  <p class="lead" style="margin-top:14px">行李：两个背包手提即可（祥鹏手提 1 件 7kg）。丽江 2400m、泸沽湖 2690m，第一天别剧烈运动。</p>
+</section>
+</main>
+
+<footer>
+  <div class="mark">泸沽湖</div>
+  8L9826 武汉 14:00 → 丽江 16:40 · 8L9825 丽江 19:20 → 武汉 21:40<br>
+  路况、营业和价格以出发前实时信息为准
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ---------- 数据 ---------- */
+const DAYS = [
+  {date:'2026-11-25', w:'周三', d:'25', title:'武汉 → 丽江 → 束河古镇', tag:'落地提车，傍晚逛古镇', stay:'住：束河 · 云景栖谷', items:[
+    {t:'14:00', what:'8L9826 武汉天河 T2 起飞'},
+    {t:'16:40', what:'落地丽江三义机场'},
+    {t:'17:00', what:'机场店提车', note:'大众高尔夫，环车拍照、看油量'},
+    {t:'17:45', what:'到束河古镇，入住云景栖谷'},
+    {t:'18:10', what:'青龙桥看古桥落日', light:'18:10–18:45', note:'日落约 18:26，天黑约 18:50'},
+    {t:'19:00', what:'四方听音广场看篝火打跳', note:'可以跟着跳'},
+    {t:'19:30', what:'晚饭：文氏奶奶 或 野生菌腊排骨火锅'}
+  ]},
+  {date:'2026-11-26', w:'周四', d:'26', title:'束河 → 泸沽湖，进湖就躺平', tag:'零夜路 · 不排任何项目', stay:'住：大落水 · 艾洛迪', items:[
+    {t:'07:30', what:'上天台看玉龙雪山日照金山', light:'07:35–08:05'},
+    {t:'08:00', what:'酒店早饭，不慌不忙'},
+    {t:'10:00', what:'出发去泸沽湖', note:'丽宁公路，实测 3h42m，按 4.5h 排'},
+    {t:'14:00', what:'泸沽湖观景台，第一眼看全湖', light:'14:00–16:00 顺光', note:'在进湖公路边，下车即拍，停 10–15 分钟'},
+    {t:'14:30', what:'泸沽湖大门买票', note:'¥70/人，观景台在大门外，先看再买'},
+    {t:'15:00', what:'入住艾洛迪，吃迟到的午饭，休息'},
+    {t:'16:30', what:'大落水湖滨步道散步'},
+    {t:'17:50', what:'大落水码头看日落', light:'17:50–18:40', note:'步行 3 分钟，零驾驶'},
+    {t:'19:00', what:'晚饭：啊夏祖母非遗餐厅', note:'就在酒店旁；有精力可去摩梭篝火晚会 ¥30/人'}
+  ]},
+  {date:'2026-11-27', w:'周五', d:'27', title:'云南侧慢线', tag:'睡到自然醒 · 零夜路', stay:'住：大落水 · 艾洛迪', items:[
+    {t:'07:40', what:'大落水码头看日出晨雾', light:'07:40–08:30', note:'天气好想早起再去，步行', opt:true},
+    {t:'08:30', what:'大落水码头坐猪槽船', light:'08:30–10:00 湖面最平', note:'¥80–130/人，上船前谈好路线、时长、是否含上岛费'},
+    {t:'10:30', what:'里格观景台 + 里格半岛，拍蓝色心形湾', light:'10:00–12:00'},
+    {t:'12:00', what:'里格咖啡 / 午饭'},
+    {t:'12:45', what:'顺路尼塞情人树 → 小落水'},
+    {t:'13:30', what:'回酒店午休'},
+    {t:null, what:'格姆女神山索道', note:'¥110–140；冬季是否运营先电话确认；上午光线好，可和猪槽船二选一', opt:true},
+    {t:'17:50', what:'大落水码头看日落', light:'17:50–18:40', note:'想换地方：洛洼码头，车程约 40 分钟，人少'}
+  ]},
+  {date:'2026-11-28', w:'周六', d:'28', title:'四川侧 + 女神湾日落', tag:'全程唯一一次夜路', stay:'住：大落水 · 艾洛迪', items:[
+    {t:'09:00', what:'出发去草海', note:'车程约 40 分钟'},
+    {t:'09:30', what:'草海 / 走婚桥，拍金色芦苇', light:'09:30–11:00 顺光'},
+    {t:'12:00', what:'泸沽湖镇午饭，之后找咖啡馆歇会儿'},
+    {t:'15:00', what:'四川侧情人滩', light:'15:00–16:30', note:'浅滩枯树 + 蓝湖水'},
+    {t:'17:15', what:'到女神湾占位', note:'离环湖公路约 1 km，走栈道进去'},
+    {t:'17:30', what:'女神湾日落「橘子海」', light:'17:30–18:20 金光 · 18:20–18:45 晚霞'},
+    {t:'18:50', what:'开夜路回大落水，约 45 分钟', note:'走环湖主路慢开；不想开夜路就改去洛洼码头看日落'}
+  ]},
+  {date:'2026-11-29', w:'周日', d:'29', title:'返程', tag:'还车 17:30 · 航班 19:20', stay:'', items:[
+    {t:'07:46', what:'再看一次日出', light:'07:40–08:30', note:'步行即可', opt:true},
+    {t:'09:00', what:'慢慢吃早饭，逛大落水市集买伴手礼'},
+    {t:'12:30', what:'退房'},
+    {t:'13:00', what:'出发回丽江机场', note:'实测 3h42m'},
+    {t:'17:15', what:'到机场，17:30 还车验车'},
+    {t:'18:00', what:'办值机'},
+    {t:'19:20', what:'8L9825 起飞，21:40 落地武汉天河'}
+  ]}
+];
+
+const SPOTS = [
+  {name:'束河天台 · 日照金山', when:'07:35–08:05', win:[[7.58,8.08]], day:'周四早上', p:'云景栖谷顶楼直面玉龙雪山，看完再吃早饭。'},
+  {name:'猪槽船', when:'10 点前', win:[[8.5,10]], day:'周五 08:30', p:'湖面风平浪静、有倒影。大落水、里格、洛洼码头都能上船。'},
+  {name:'里格观景台 · 心形湾', when:'10:00–12:00', win:[[10,12]], alt:[[7.67,9]], day:'周五 10:30', p:'早上是逆光，水拍不蓝；10 点后拍标志性蓝色心形湾。虚线是晨雾、剪影时段。'},
+  {name:'草海 / 走婚桥', when:'09:30–11:00', win:[[9.5,11]], alt:[[16,17.5]], day:'周六上午', p:'11 月底芦苇金黄，上午顺光通透；虚线是 16 点后的逆光剪影。'},
+  {name:'泸沽湖观景台', when:'14:00–16:00', win:[[14,16]], day:'周四进湖路上', p:'进湖山口，俯瞰全湖，下午顺光，下车即拍。'},
+  {name:'情人滩（四川侧）', when:'15:00–17:00', win:[[15,17]], day:'周六下午', p:'浅滩枯树 + 蓝湖水，清冷感。'},
+  {name:'女神湾（赵家湾）', when:'17:30–18:45', win:[[17.5,18.33]], alt:[[18.33,18.75]], day:'周六傍晚', p:'全湖日落天花板。17:15 前到，走约 1 km 栈道占位；实线金光，虚线晚霞。'},
+  {name:'大落水码头', when:'17:50–18:40', win:[[17.83,18.67]], alt:[[7.67,8.5]], day:'周四、周五傍晚', p:'酒店步行 3 分钟，零驾驶。虚线是日出晨雾，看天气。'},
+  {name:'格姆女神山索道', when:'上午', win:[[9,12]], day:'周五可选', p:'光线柔和、俯瞰全湖。冬季是否运营先电话确认。'}
+];
+
+/* ---------- 天色：按钟点取色 ---------- */
+const SKY = [[5,'#1C2147'],[7.2,'#3B2E5A'],[7.6,'#8C6A9E'],[7.9,'#F2A65A'],[8.6,'#F3D9A0'],[10,'#A9D3E6'],[13,'#7DB8DA'],[16,'#A9CDE0'],[17.3,'#F2C46B'],[18.1,'#E8784A'],[18.5,'#B05A6E'],[18.9,'#3B2E5A'],[20,'#1C2147'],[23,'#141933']];
+function hex(h){return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16))}
+function skyAt(x){
+  if(x<=SKY[0][0]) return SKY[0][1];
+  for(let i=1;i<SKY.length;i++){
+    if(x<=SKY[i][0]){
+      const [a,ca]=SKY[i-1],[b,cb]=SKY[i],k=(x-a)/(b-a),A=hex(ca),B=hex(cb);
+      return 'rgb('+A.map((v,j)=>Math.round(v+(B[j]-v)*k)).join(',')+')';
+    }
+  }
+  return SKY[SKY.length-1][1];
+}
+const toH = s => {const [h,m]=s.split(':').map(Number);return h+m/60};
+function skyGradient(from,to){
+  const stops=[];for(let i=0;i<=6;i++){const x=from+(to-from)*i/6;stops.push(skyAt(x)+' '+(i/6*100).toFixed(0)+'%')}
+  return 'linear-gradient(180deg,'+stops.join(',')+')';
+}
+
+/* ---------- 当前时间（按北京时间） ---------- */
+function bjNow(){const n=new Date();return new Date(n.getTime()+(n.getTimezoneOffset()+480)*60000)}
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+
+/* ---------- 渲染：天选择 + 时间线 ---------- */
+const daysEl=document.getElementById('days'),view=document.getElementById('dayView');
+const todayStr=ymd(bjNow());
+let cur=Math.max(0,DAYS.findIndex(d=>d.date===todayStr));
+
+DAYS.forEach((d,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('role','tab');b.id='tab'+i;
+  b.innerHTML='<span class="w">'+d.w+'</span><span class="d">'+d.d+'</span><span class="today">'+(d.date===todayStr?'今天':'')+'</span>';
+  b.onclick=()=>{cur=i;renderDay()};
+  daysEl.appendChild(b);
+});
+
+function renderDay(){
+  [...daysEl.children].forEach((b,i)=>b.setAttribute('aria-selected',i===cur));
+  const d=DAYS[cur],isToday=d.date===todayStr;
+  const nowH=(()=>{const n=bjNow();return n.getHours()+n.getMinutes()/60})();
+  const timed=d.items.filter(x=>x.t).map(x=>toH(x.t));
+  let nextIdx=-1;
+  if(isToday){nextIdx=d.items.findIndex(x=>x.t&&toH(x.t)>=nowH-0.25)}
+  let html='<div class="day-head"><h3>'+d.title+'</h3><span class="tag">'+d.tag+'</span>'+(d.stay?'<div class="stay">'+d.stay+'</div>':'')+'</div><ol class="tl">';
+  d.items.forEach((it,i)=>{
+    const h=it.t?toH(it.t):null;
+    let nh=null;for(let j=i+1;j<d.items.length;j++){if(d.items[j].t){nh=toH(d.items[j].t);break}}
+    const from=h??(timed.length?timed[0]:9),to=nh??(from+1);
+    const cls=[it.light?'light':'',it.opt?'opt':'',i===nextIdx?'next':'',(isToday&&nextIdx>-1&&i<nextIdx&&it.t)?'past':''].join(' ');
+    const c=skyAt(h??12);
+    html+='<li class="'+cls+'" style="--c:'+c+'">'+
+      '<div class="t '+(it.t?'':'none')+'">'+(it.t||'随时')+'</div>'+
+      '<div class="sky" style="background:'+(h==null?'var(--line)':skyGradient(from,to))+'"></div>'+
+      '<div class="body"><div class="what">'+it.what+'</div>'+
+      (it.light?'<span class="lw">光线 '+it.light+'</span>':'')+
+      (it.note?'<div class="note">'+it.note+'</div>':'')+'</div></li>';
+  });
+  view.innerHTML=html+'</ol>';
+}
+renderDay();
+
+/* ---------- 渲染：光线表 ---------- */
+const A0=6,A1=20,pct=x=>((x-A0)/(A1-A0)*100).toFixed(2)+'%';
+document.getElementById('spots').innerHTML=SPOTS.map(s=>{
+  const w=(arr,alt)=>(arr||[]).map(([a,b])=>'<div class="w'+(alt?' alt':'')+'" style="left:'+pct(a)+';width:calc('+pct(b)+' - '+pct(a)+')"></div>').join('');
+  return '<div class="spot"><div class="top"><h4>'+s.name+'</h4><span class="when">'+s.when+'</span></div>'+
+    '<div class="bar" style="background:linear-gradient(90deg,'+[6,7,7.75,8.5,10,13,16,17.3,18.1,18.5,18.9,20].map(x=>skyAt(x)+' '+pct(x)).join(',')+')">'+
+    '<div class="tick" style="left:'+pct(7.77)+'"></div><div class="tick" style="left:'+pct(18.37)+'"></div>'+w(s.win)+w(s.alt,true)+'</div>'+
+    '<div class="axis"><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>20</span></div>'+
+    '<p>'+s.p+'</p><div class="day">安排在：'+s.day+'</div></div>';
+}).join('');
+
+/* ---------- Hero 倒计时 ---------- */
+function tickNow(){
+  const n=bjNow(),k=document.getElementById('nowK'),v=document.getElementById('nowV'),s=document.getElementById('nowS');
+  const start=new Date(2026,10,25,14,0),end=new Date(2026,10,29,21,40);
+  const fmt=m=>{m=Math.max(0,Math.round(m));const h=Math.floor(m/60);return h?h+' 小时 '+pad(m%60)+' 分':m+' 分钟'};
+  if(n<start){
+    const days=Math.floor((start-n)/864e5);
+    k.textContent='距起飞';v.textContent=days>0?days+' 天':fmt((start-n)/6e4);s.textContent='11/25 14:00 · 8L9826';
+  }else if(n>end){
+    k.textContent='旅程结束';v.textContent='到家了';s.textContent='照片记得备份';
+  }else{
+    const h=n.getHours()+n.getMinutes()/60,rise=7+46/60,set=18+22/60;
+    if(h<rise){k.textContent='距日出';v.textContent=fmt((rise-h)*60);s.textContent='今天日出 07:46'}
+    else if(h<set){k.textContent='距日落';v.textContent=fmt((set-h)*60);s.textContent='今天日落 18:22 · 17:30 起是金光'}
+    else{k.textContent='距明早日出';v.textContent=fmt((24-h+rise)*60);s.textContent='明天日出 07:46'}
+  }
+}
+tickNow();setInterval(tickNow,30000);
+
+/* ---------- 导航高亮 ---------- */
+const links=[...document.querySelectorAll('nav.tabs a')];
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on)a.scrollIntoView({inline:'center',block:'nearest'})})}})},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+
+/* ---------- 复制订单号 ---------- */
+const toast=document.getElementById('toast');
+function say(t){toast.textContent=t;toast.classList.add('show');clearTimeout(say.t);say.t=setTimeout(()=>toast.classList.remove('show'),1600)}
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{
+  const t=b.dataset.copy;
+  try{await navigator.clipboard.writeText(t);say('已复制 '+t)}
+  catch(e){const r=document.createRange();r.selectNodeContents(b);const s=getSelection();s.removeAllRanges();s.addRange(r);say('已选中，长按复制')}
+});
+
+/* ---------- 清单本地保存 ---------- */
+const KEY='lugu-check-2026';
+const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+document.querySelectorAll('.check input').forEach(i=>{
+  i.checked=!!saved[i.dataset.k];
+  i.onchange=()=>{saved[i.dataset.k]=i.checked;localStorage.setItem(KEY,JSON.stringify(saved))};
+});
+</script>
+</body>
+</html>
